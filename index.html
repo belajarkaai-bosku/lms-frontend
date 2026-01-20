@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LMS Sekolah - Supabase (Mode Sekolah)</title>
+  <title>LMS Sekolah • Supabase Mode Sekolah</title>
 
   <style>
     :root{
@@ -26,39 +26,44 @@
       line-height: 1.5;
     }
     a{ color:inherit; text-decoration:none; }
+    img{ max-width:100%; display:block; }
     .container{ width:min(1100px, 92%); margin:0 auto; }
 
-    header{
-      position: sticky; top:0; z-index:10;
-      background: rgba(248,250,252,.92);
-      border-bottom:1px solid var(--border);
+    /* ===== HEADER ===== */
+    .site-header{
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(248,250,252,.9);
       backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
     }
     .topbar{
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 14px 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
       gap: 14px;
+      padding: 12px 0;
     }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight: 900;
-    }
+    .brand{ display:flex; align-items:center; gap: 12px; font-weight: 900; }
+    .brand-title{ font-size: 14px; font-weight: 900; }
+    .brand-sub{ font-size: 12px; color: var(--muted); font-weight: 700; }
     .school-logo{
       width: 42px;
       height: 42px;
       object-fit: contain;
     }
-    .rolebox{
-      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-      background:#fff;
-      border:1px solid var(--border);
-      border-radius: 999px;
-      padding: 6px 10px;
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
     .pill{
       font-size: 12px;
-      font-weight: 800;
-      padding: 6px 10px;
+      font-weight: 900;
+      padding: 8px 12px;
       border-radius: 999px;
       background: #dbeafe;
       color:#1e40af;
@@ -66,123 +71,17 @@
       white-space: nowrap;
     }
 
-    .layout{
-      display:grid;
-      grid-template-columns: 280px 1fr;
-      gap: 16px;
-      padding: 18px 0 30px;
-    }
-    @media (max-width: 900px){
-      .layout{ grid-template-columns: 1fr; }
-    }
-
-    aside{
-      background: var(--card);
+    .hamburger{
+      display:none;
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 14px;
-      height: fit-content;
-    }
-    .side-title{
+      background:#fff;
+      padding: 10px 12px;
+      border-radius: 14px;
       font-weight: 900;
-      margin: 0 0 10px;
-      display:flex; align-items:center; justify-content:space-between;
-      gap:10px;
-    }
-    .menu{
-      display:flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 10px;
-    }
-    .menu button{
-      width: 100%;
-      text-align: left;
-      border: 1px solid var(--border);
-      background: #fff;
-      padding: 10px 12px;
-      border-radius: 14px;
-      cursor: pointer;
-      font-weight: 800;
-      color: var(--muted);
-    }
-    .menu button:hover{ background:#eff6ff; color: var(--text); border-color:#bfdbfe; }
-    .menu button.active{
-      background: var(--blue);
-      color: #fff;
-      border-color: transparent;
-      box-shadow: 0 10px 25px rgba(37,99,235,.22);
+      cursor:pointer;
     }
 
-    main{ display:grid; gap: 14px; }
-    .card{
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 16px;
-    }
-    h1,h2,h3{ margin:0 0 10px; }
-    .muted{ color: var(--muted); margin:0; }
-
-    .list{ display:grid; gap: 10px; margin-top: 12px; }
-    .item{
-      border:1px solid var(--border);
-      border-radius: 16px;
-      padding: 12px;
-      background:#fff;
-      display:flex;
-      align-items:flex-start;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .meta{ color: var(--muted); font-size: 13px; margin-top: 6px; }
-    .badge{
-      display:inline-flex;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid #bfdbfe;
-      background:#eff6ff;
-      color:#1e40af;
-      font-weight: 800;
-      font-size: 12px;
-      white-space: nowrap;
-      height: fit-content;
-    }
-
-    .form{ display:grid; gap: 10px; margin-top: 12px; }
-    label{ font-weight: 800; font-size: 13px; color: var(--muted); }
-    input, textarea, select{
-      width: 100%;
-      border:1px solid var(--border);
-      border-radius: 14px;
-      padding: 10px 12px;
-      font: inherit;
-      outline: none;
-      background:#fff;
-    }
-    textarea{ min-height: 120px; resize: vertical; }
-
-    .filebox{
-      border: 1px dashed #cbd5e1;
-      border-radius: 16px;
-      background:#fafafa;
-      padding: 12px;
-      display:grid;
-      gap: 8px;
-    }
-    .filehint{ font-size: 13px; color: var(--muted); }
-
-    .row2{
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    @media (max-width: 560px){
-      .row2{ grid-template-columns: 1fr; }
-    }
-
+    /* ===== BUTTONS ===== */
     .actions{ display:flex; gap: 10px; flex-wrap: wrap; }
     .btn{
       border: 1px solid var(--border);
@@ -203,36 +102,227 @@
     }
     .btn.secondary:hover{ background:#eff6ff; }
 
-    /* Auth + App visibility */
-    #appContent{ display:none; }
-    #authBox{ margin: 14px auto 0; }
+    /* ===== CARDS ===== */
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+    .muted{ color: var(--muted); margin:0; }
+    h1,h2,h3{ margin:0 0 10px; }
+
+    /* ===== AUTH ===== */
+    #authWrap{ padding: 18px 0 8px; }
+    .auth-card{ padding: 18px; }
+
+    label{ font-weight: 800; font-size: 13px; color: var(--muted); }
+    input, textarea, select{
+      width: 100%;
+      border:1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font: inherit;
+      outline: none;
+      background:#fff;
+    }
+    textarea{ min-height: 120px; resize: vertical; }
+    .form{ display:grid; gap: 10px; margin-top: 12px; }
+
+    /* ===== APP LAYOUT ===== */
+    #appContent{ display:none; padding: 10px 0 28px; }
+
+    .layout{
+      display:grid;
+      grid-template-columns: 280px 1fr;
+      gap: 16px;
+      padding: 10px 0 10px;
+    }
+
+    .sidebar{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      height: fit-content;
+      position: sticky;
+      top: 82px;
+    }
+
+    .side-title{
+      font-weight: 900;
+      margin: 0 0 10px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+    }
+
+    .badge{
+      display:inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #bfdbfe;
+      background:#eff6ff;
+      color:#1e40af;
+      font-weight: 900;
+      font-size: 12px;
+      white-space: nowrap;
+      height: fit-content;
+    }
+
+    .menu-group{
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .4px;
+      color: var(--muted);
+      margin: 6px 0 10px;
+      padding: 8px 10px;
+      border: 1px dashed #cbd5e1;
+      border-radius: 14px;
+      background: #f8fafc;
+    }
+
+    .menu{
+      display:flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .menu button{
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 10px 12px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 900;
+      color: var(--muted);
+      position: relative;
+      transition: transform .05s ease;
+    }
+    .menu button:hover{ background:#eff6ff; color: var(--text); border-color:#bfdbfe; }
+    .menu button:active{ transform: scale(.99); }
+    .menu button.active{
+      background: var(--blue);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 10px 25px rgba(37,99,235,.22);
+    }
+    .menu button.active::before{
+      content:"";
+      position:absolute;
+      left: 10px;
+      top: 10px;
+      bottom: 10px;
+      width: 4px;
+      border-radius: 99px;
+      background: rgba(255,255,255,.9);
+    }
+
+    main{ display:grid; gap: 14px; }
+
+    .page-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .list{ display:grid; gap: 10px; margin-top: 12px; }
+    .item{
+      border:1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px;
+      background:#fff;
+      display:flex;
+      align-items:flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .meta{ color: var(--muted); font-size: 13px; margin-top: 6px; }
+
+    .filebox{
+      border: 1px dashed #cbd5e1;
+      border-radius: 16px;
+      background:#fafafa;
+      padding: 12px;
+      display:grid;
+      gap: 8px;
+    }
+    .filehint{ font-size: 13px; color: var(--muted); }
+
+    .row2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    /* overlay drawer */
+    .overlay{
+      display:none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,.35);
+      z-index: 40;
+    }
+    .side-footer{
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 900px){
+      .layout{ grid-template-columns: 1fr; }
+      .hamburger{ display:inline-flex; align-items:center; gap:8px; }
+      .sidebar{
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: min(320px, 86vw);
+        border-radius: 0 18px 18px 0;
+        z-index: 50;
+        transform: translateX(-110%);
+        transition: transform .18s ease;
+        overflow: auto;
+        padding-top: 18px;
+      }
+      .sidebar.open{ transform: translateX(0); }
+      .overlay.open{ display:block; }
+      .row2{ grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 
 <body>
-
-  <header>
-    <div class="container">
-      <div class="topbar">
-        <div class="brand">
-          <img src="logo-sekolah.png" alt="Logo Duruusul Quran Islamic School Makassar" class="school-logo">
-          <div>
-            <div style="font-size:14px; font-weight:900;">LMS Sekolah</div>
-            <div style="font-size:12px; color:var(--muted); font-weight:700;">Supabase • Mode Sekolah</div>
-          </div>
-        </div>
-
-        <div class="rolebox">
-          <span class="pill" id="rolePill">Role: -</span>
-          <span class="pill" id="userPill" style="background:#eef2ff;border-color:#c7d2fe;color:#3730a3;">User: -</span>
-          <button class="btn secondary" id="btnLogoutTop" style="display:none;">Logout</button>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container topbar">
+      <div class="brand">
+        <img src="logo-sekolah.png" alt="Logo Duruusul Quran Islamic School Makassar" class="school-logo">
+        <div>
+          <div class="brand-title">LMS Sekolah</div>
+          <div class="brand-sub">Supabase • Mode Sekolah</div>
         </div>
       </div>
-    </div>
 
-    <!-- Login box (tetap di header biar jelas) -->
-    <section class="card container" id="authBox">
-      <h3>Login LMS</h3>
+      <div class="top-actions">
+        <button class="hamburger" id="btnMenu" type="button" aria-label="Buka menu">☰</button>
+        <span class="pill" id="rolePill">Role: -</span>
+        <span class="pill" id="userPill">User: -</span>
+        <button class="btn secondary" id="btnLogoutTop" type="button" style="display:none;">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- AUTH -->
+  <section class="container" id="authWrap">
+    <div class="card auth-card" id="authBox">
+      <h2>Login LMS</h2>
       <p class="muted" id="authStatus">Silakan login untuk mengakses LMS.</p>
 
       <div class="form" style="max-width:520px;">
@@ -245,32 +335,47 @@
           <input id="loginPass" type="password" placeholder="••••••••" />
         </div>
         <div class="actions">
-          <button class="btn" id="btnLogin">Login</button>
-          <button class="btn secondary" id="btnLogout" style="display:none;">Logout</button>
+          <button class="btn" id="btnLogin" type="button">Login</button>
+          <button class="btn secondary" id="btnLogout" type="button" style="display:none;">Logout</button>
         </div>
       </div>
-    </section>
-  </header>
+    </div>
+  </section>
 
-  <!-- App (disembunyikan sampai login) -->
+  <!-- APP -->
   <div id="appContent">
     <div class="container">
       <div class="layout">
-        <aside>
+        <div class="overlay" id="overlay"></div>
+
+        <aside class="sidebar" id="sidebar">
           <div class="side-title">
             <span>Menu</span>
             <span class="badge" id="menuHint">-</span>
           </div>
+
+          <div class="menu-group" id="menuGroupTitle">Siswa</div>
           <div class="menu" id="menu"></div>
+
+          <div class="side-footer">
+            <small class="muted">© LMS Sekolah</small>
+          </div>
         </aside>
 
         <main>
+          <div class="page-head">
+            <div>
+              <h1 id="pageTitle">Dashboard</h1>
+              <p class="muted" id="pageDesc">Ringkasan dan informasi.</p>
+            </div>
+          </div>
+
           <section class="card" id="page"></section>
 
           <section class="card">
             <h3>Catatan</h3>
             <p class="muted">
-              File tugas/materi disimpan di <b>Supabase Storage</b> (permanen). Untuk bucket private, download memakai <b>signed URL</b>.
+              File tugas/materi disimpan di <b>Supabase Storage</b> (permanen) dan aksesnya memakai <b>signed URL</b>.
             </p>
           </section>
         </main>
@@ -278,20 +383,19 @@
     </div>
   </div>
 
-  <!-- Supabase JS -->
+  <!-- SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script>
-    /********************************************************************
+    /***********************
      * 1) KONFIGURASI SUPABASE
-     ********************************************************************/
+     ***********************/
     const SUPABASE_URL = "https://ptnzvzcnmcrbgbmkuvzd.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0bnp2emNubWNyYmdibWt1dnpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NDMzNjAsImV4cCI6MjA4NDQxOTM2MH0.JT-jD31hOeo5-HHDLyGXPtDbOCxA5wvC52rV6OQoBmo";
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    /********************************************************************
-     * 2) KONFIGURASI MAPEL
-     ********************************************************************/
+    /***********************
+     * 2) DATA & KONSTANTA
+     ***********************/
     const MAPEL_ORDER = [
       "Bahasa Indonesia",
       "PKN",
@@ -308,9 +412,7 @@
     ];
     const DINIYAH_SUB_ORDER = ["Aqidah", "Fiqih", "Tafsir", "Siroh", "Khot"];
 
-    /********************************************************************
-     * 3) STATE & MENU
-     ********************************************************************/
+    // menu role
     const menus = {
       siswa: [
         { key: "dashboard", label: "Dashboard" },
@@ -318,15 +420,24 @@
         { key: "materi", label: "Materi" },
       ],
       guru: [
-        { key: "berikan-dashboard", label: "Berikan Dashboard" },
-        { key: "berikan-tugas", label: "Berikan Tugas (Upload)" },
+        { key: "berikan-dashboard", label: "Pengumuman" },
+        { key: "berikan-tugas", label: "Berikan Tugas" },
         { key: "berikan-materi", label: "Berikan Materi" },
       ]
     };
 
+    // state global
+    const sample = { tugas: [], materi: [] };
+    let currentRole = null; // 'guru'/'siswa'
+    let state = { role: "siswa", page: "dashboard" };
+
+    /***********************
+     * 3) ELEMEN DOM
+     ***********************/
     const rolePill = document.getElementById("rolePill");
     const userPill = document.getElementById("userPill");
     const menuHint = document.getElementById("menuHint");
+    const menuGroupTitle = document.getElementById("menuGroupTitle");
     const menuEl = document.getElementById("menu");
     const pageEl = document.getElementById("page");
 
@@ -335,17 +446,135 @@
     const btnLogout = document.getElementById("btnLogout");
     const btnLogoutTop = document.getElementById("btnLogoutTop");
 
-    const authBox = document.getElementById("authBox");
-    const appContent = document.getElementById("appContent");
+    const btnMenu = document.getElementById("btnMenu");
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
 
-    let currentRole = null;  // 'guru' atau 'siswa'
-    let currentUser = null;  // supabase user
+    /***********************
+     * 4) HELPERS UI
+     ***********************/
+    function escapeHtml(str){
+      return String(str ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
 
-    let state = { role: "siswa", page: "dashboard" };
+    function formatBytes(bytes){
+      if (!Number.isFinite(bytes)) return "-";
+      const units = ["B","KB","MB","GB"];
+      let i = 0, n = bytes;
+      while (n >= 1024 && i < units.length - 1){
+        n = n / 1024; i++;
+      }
+      return n.toFixed(i === 0 ? 0 : 1) + " " + units[i];
+    }
 
-    // data dari Supabase (di-load setelah login)
-    const sample = { tugas: [], materi: [] };
+    function setPageHeader(title, desc){
+      document.getElementById("pageTitle").textContent = title;
+      document.getElementById("pageDesc").textContent = desc;
+    }
 
+    function openMenu(){
+      sidebar.classList.add("open");
+      overlay.classList.add("open");
+    }
+    function closeMenu(){
+      sidebar.classList.remove("open");
+      overlay.classList.remove("open");
+    }
+
+    /***********************
+     * 5) SUPABASE STORAGE (UPLOAD & DOWNLOAD)
+     ***********************/
+    async function uploadToSupabase(bucket, folder, file){
+      const ext = file.name.includes(".") ? file.name.split(".").pop() : "";
+      const safeExt = ext ? "." + ext : "";
+      const path = `${folder}/${Date.now()}-${Math.random().toString(16).slice(2)}${safeExt}`;
+
+      const { error } = await supabaseClient.storage.from(bucket).upload(path, file, { upsert: false });
+      if (error) throw error;
+
+      return { file_path: path, file_name: file.name, file_size: file.size };
+    }
+
+    // download pakai signed URL (10 menit)
+    async function openDownload(bucket, file_path){
+      try{
+        const { data, error } = await supabaseClient.storage.from(bucket).createSignedUrl(file_path, 60 * 10);
+        if (error) throw error;
+        window.open(data.signedUrl, "_blank");
+      }catch(e){
+        alert("Gagal download: " + (e?.message || String(e)));
+      }
+    }
+
+    /***********************
+     * 6) AUTH & ROLE
+     ***********************/
+    async function fetchMyRole(){
+      const { data: { user } } = await supabaseClient.auth.getUser();
+      if (!user) return null;
+
+      const { data, error } = await supabaseClient
+        .from("profiles")
+        .select("role, full_name")
+        .eq("id", user.id)
+        .single();
+
+      if (error) throw error;
+      return data?.role || "siswa";
+    }
+
+    async function loadTugasMateri(){
+      const { data: tugas, error: e1 } = await supabaseClient
+        .from("tugas").select("*").order("created_at", { ascending: false });
+      if (e1) throw e1;
+
+      const { data: materi, error: e2 } = await supabaseClient
+        .from("materi").select("*").order("created_at", { ascending: false });
+      if (e2) throw e2;
+
+      sample.tugas = tugas || [];
+      sample.materi = materi || [];
+    }
+
+    async function refreshUIAfterLogin(){
+      currentRole = await fetchMyRole(); // guru / siswa
+      const { data: { user } } = await supabaseClient.auth.getUser();
+
+      // set badges header
+      const rLabel = (currentRole === "guru") ? "Guru" : "Siswa";
+      rolePill.textContent = "Role: " + rLabel;
+      menuHint.textContent = rLabel;
+      menuGroupTitle.textContent = rLabel;
+      userPill.textContent = "User: " + (user?.email || "-");
+
+      // set menu state
+      state.role = (currentRole === "guru") ? "guru" : "siswa";
+      state.page = (state.role === "guru") ? "berikan-dashboard" : "dashboard";
+
+      await loadTugasMateri();
+      renderMenu();
+      renderPage();
+
+      // show app
+      document.getElementById("appContent").style.display = "block";
+      authStatus.textContent = "✅ Login berhasil.";
+    }
+
+    async function updateButtons(){
+      const { data: { user } } = await supabaseClient.auth.getUser();
+      btnLogin.style.display = user ? "none" : "inline-block";
+      btnLogout.style.display = user ? "inline-block" : "none";
+      btnLogoutTop.style.display = user ? "inline-block" : "none";
+    }
+
+    /***********************
+     * 7) MENU & PAGE RENDER
+     ***********************/
     function setPage(key){
       state.page = key;
       renderMenu();
@@ -354,8 +583,7 @@
 
     function renderMenu(){
       menuEl.innerHTML = "";
-      const items = menus[state.role] || [];
-      items.forEach(item => {
+      menus[state.role].forEach(item => {
         const btn = document.createElement("button");
         btn.textContent = item.label;
         btn.className = item.key === state.page ? "active" : "";
@@ -364,16 +592,14 @@
       });
     }
 
-    /********************************************************************
-     * 4) PAGES SISWA
-     ********************************************************************/
+    // ===== Pages Siswa =====
     function pageSiswaDashboard(){
       const totalTugas = sample.tugas.length;
       const tugasDenganFile = sample.tugas.filter(t => t.file_path).length;
 
       return `
-        <h1>Dashboard Siswa</h1>
-        <p class="muted">Ringkasan tugas dan materi.</p>
+        <h2>Ringkasan</h2>
+        <p class="muted">Ringkasan tugas dan file yang tersedia.</p>
 
         <div class="list">
           <div class="item">
@@ -391,29 +617,22 @@
             </div>
             <span class="badge">File</span>
           </div>
-
-          <div class="item">
-            <div>
-              <strong>Total Materi</strong>
-              <div class="meta">${sample.materi.length} materi</div>
-            </div>
-            <span class="badge">Info</span>
-          </div>
         </div>
       `;
     }
 
     function pageSiswaTugas(){
-      const rows = sample.tugas.map((t) => {
+      const rows = (sample.tugas || []).map((t) => {
         const filePart = t.file_path
           ? `
-            <div class="meta">
-              <button class="btn secondary" onclick="openDownload('lms-files','${escapeHtml(t.file_path)}')">
-                ⬇ Download: ${escapeHtml(t.file_name || "Lampiran")}
-              </button>
-            </div>
-            <div class="meta">Ukuran: ${formatBytes(Number(t.file_size) || 0)}</div>
-          `
+              <div class="meta">
+                <button class="btn secondary" type="button"
+                  onclick="openDownload('lms-files','${escapeHtml(t.file_path)}')">
+                  ⬇ Download: ${escapeHtml(t.file_name || 'Lampiran')}
+                </button>
+              </div>
+              <div class="meta">Ukuran: ${formatBytes(Number(t.file_size) || 0)}</div>
+            `
           : `<div class="meta">Lampiran: -</div>`;
 
         return `
@@ -421,7 +640,7 @@
             <div>
               <strong>${escapeHtml(t.judul)}</strong>
               <div class="meta">Deadline: ${escapeHtml(t.deadline || "-")}</div>
-              ${t.deskripsi ? `<div class="meta">${escapeHtml(t.deskripsi)}</div>` : ""}
+              <div class="meta">Deskripsi: ${escapeHtml(t.deskripsi || "-")}</div>
               ${filePart}
             </div>
             <span class="badge">Tugas</span>
@@ -430,15 +649,16 @@
       }).join("");
 
       return `
-        <h1>Tugas</h1>
+        <h2>Daftar Tugas</h2>
         <p class="muted">Daftar tugas. Jika ada file, kamu bisa download.</p>
         <div class="list">${rows || `<p class="muted">Belum ada tugas.</p>`}</div>
       `;
     }
 
     function pageSiswaMateri(){
+      // group by mapel
       const grouped = new Map();
-      sample.materi.forEach(m => {
+      (sample.materi || []).forEach(m => {
         const mapel = m.mapel || "Lainnya";
         if (!grouped.has(mapel)) grouped.set(mapel, []);
         grouped.get(mapel).push(m);
@@ -455,8 +675,9 @@
               ${m.link ? `<div class="meta"><a class="btn secondary" href="${escapeHtml(m.link)}" target="_blank" rel="noopener">🔗 Buka Link</a></div>` : ""}
               ${m.file_path ? `
                 <div class="meta">
-                  <button class="btn secondary" onclick="openDownload('lms-files','${escapeHtml(m.file_path)}')">
-                    ⬇ Download: ${escapeHtml(m.file_name || "Lampiran")}
+                  <button class="btn secondary" type="button"
+                    onclick="openDownload('lms-files','${escapeHtml(m.file_path)}')">
+                    ⬇ Download: ${escapeHtml(m.file_name || 'Lampiran')}
                   </button>
                 </div>
                 <div class="meta">Ukuran: ${formatBytes(Number(m.file_size) || 0)}</div>
@@ -515,23 +736,22 @@
         .join("");
 
       const diniyah = renderDiniyahBlock();
+      const totalMateri = (sample.materi || []).length;
 
       return `
-        <h1>Materi</h1>
-        <p class="muted">Materi pembelajaran dikelompokkan berdasarkan mata pelajaran.</p>
-        ${sample.materi.length === 0 ? `<p class="muted" style="margin-top:10px;">Belum ada materi.</p>` : ""}
+        <h2>Materi</h2>
+        <p class="muted">Materi dikelompokkan berdasarkan mata pelajaran.</p>
+        ${totalMateri === 0 ? `<p class="muted" style="margin-top:10px;">Belum ada materi.</p>` : ""}
         ${blocks}
         ${diniyah}
       `;
     }
 
-    /********************************************************************
-     * 5) PAGES GURU
-     ********************************************************************/
+    // ===== Pages Guru =====
     function pageGuruBerikanDashboard(){
       return `
-        <h1>Berikan Dashboard</h1>
-        <p class="muted">Contoh halaman untuk menulis pengumuman (tampilan saja).</p>
+        <h2>Pengumuman</h2>
+        <p class="muted">Contoh halaman untuk menulis pengumuman (demo).</p>
 
         <form class="form" onsubmit="return false;">
           <div>
@@ -543,7 +763,7 @@
             <textarea id="annBody" placeholder="Tulis informasi untuk siswa..."></textarea>
           </div>
           <div class="actions">
-            <button class="btn" id="btnAnn">Publikasikan</button>
+            <button class="btn" id="btnAnn" type="button">Publikasikan</button>
             <button class="btn secondary" type="reset">Reset</button>
           </div>
           <p class="muted" id="annMsg" style="margin-top:8px;"></p>
@@ -553,8 +773,8 @@
 
     function pageGuruBerikanTugas(){
       return `
-        <h1>Berikan Tugas (Upload File)</h1>
-        <p class="muted">Isi judul + deadline + upload lampiran. (Supabase Storage)</p>
+        <h2>Berikan Tugas</h2>
+        <p class="muted">Isi judul + deadline + upload lampiran (pdf/doc/zip/dll).</p>
 
         <form class="form" onsubmit="return false;">
           <div>
@@ -568,9 +788,9 @@
           </div>
 
           <div class="filebox">
-            <label>Upload File Lampiran (opsional)</label>
+            <label>Upload File Lampiran</label>
             <input id="taskFile" type="file" />
-            <div class="filehint">PDF/DOCX/ZIP, dll. (Upload permanen ke Supabase Storage)</div>
+            <div class="filehint">File disimpan di Supabase Storage (permanen). Hanya guru boleh upload.</div>
           </div>
 
           <div>
@@ -579,7 +799,7 @@
           </div>
 
           <div class="actions">
-            <button class="btn" id="btnTask">Tambahkan Tugas</button>
+            <button class="btn" id="btnTask" type="button">Tambahkan Tugas</button>
             <button class="btn secondary" type="reset">Reset</button>
           </div>
 
@@ -593,8 +813,8 @@
       const diniyahOptions = DINIYAH_SUB_ORDER.map(s => `<option value="${s}">${s}</option>`).join("");
 
       return `
-        <h1>Berikan Materi</h1>
-        <p class="muted">Tambah materi (judul + mapel + tipe + link + upload file). (Supabase)</p>
+        <h2>Berikan Materi</h2>
+        <p class="muted">Tambah materi (judul + mapel + tipe + link/konten) + upload file (opsional).</p>
 
         <form class="form" onsubmit="return false;">
           <div>
@@ -622,18 +842,19 @@
           <div class="filebox">
             <label>Upload File Materi (opsional)</label>
             <input id="matFile" type="file" />
-            <div class="filehint">PDF/DOCX/PPTX. (Upload permanen ke Supabase Storage)</div>
+            <div class="filehint">Jika upload, siswa bisa download dengan signed URL.</div>
           </div>
 
           <div>
-            <label>Link / Konten (opsional)</label>
+            <label>Link / Konten</label>
             <textarea id="matLink" placeholder="Tempel link Google Drive / YouTube / teks materi..."></textarea>
           </div>
 
           <div class="actions">
-            <button class="btn" id="btnMat">Tambahkan Materi</button>
+            <button class="btn" id="btnMat" type="button">Tambahkan Materi</button>
             <button class="btn secondary" type="reset">Reset</button>
           </div>
+
           <p class="muted" id="matMsg" style="margin-top:8px;"></p>
         </form>
       `;
@@ -644,38 +865,39 @@
       const p = state.page;
 
       if (r === "siswa"){
-        if (p === "dashboard") pageEl.innerHTML = pageSiswaDashboard();
-        if (p === "tugas") pageEl.innerHTML = pageSiswaTugas();
-        if (p === "materi") pageEl.innerHTML = pageSiswaMateri();
+        if (p === "dashboard") { setPageHeader("Dashboard", "Ringkasan tugas dan materi."); pageEl.innerHTML = pageSiswaDashboard(); }
+        if (p === "tugas") { setPageHeader("Tugas", "Daftar tugas dan lampiran."); pageEl.innerHTML = pageSiswaTugas(); }
+        if (p === "materi") { setPageHeader("Materi", "Materi dikelompokkan per mata pelajaran."); pageEl.innerHTML = pageSiswaMateri(); }
       } else {
-        if (p === "berikan-dashboard") pageEl.innerHTML = pageGuruBerikanDashboard();
-        if (p === "berikan-tugas") pageEl.innerHTML = pageGuruBerikanTugas();
-        if (p === "berikan-materi") pageEl.innerHTML = pageGuruBerikanMateri();
+        if (p === "berikan-dashboard") { setPageHeader("Pengumuman", "Buat pengumuman untuk siswa."); pageEl.innerHTML = pageGuruBerikanDashboard(); }
+        if (p === "berikan-tugas") { setPageHeader("Berikan Tugas", "Upload tugas + lampiran."); pageEl.innerHTML = pageGuruBerikanTugas(); }
+        if (p === "berikan-materi") { setPageHeader("Berikan Materi", "Tambah materi per mapel + upload file."); pageEl.innerHTML = pageGuruBerikanMateri(); }
       }
 
       wireHandlers();
     }
 
-    /********************************************************************
-     * 6) HANDLERS (setelah render)
-     ********************************************************************/
+    /***********************
+     * 8) EVENT HANDLERS PER HALAMAN
+     ***********************/
     function wireHandlers(){
-      // Pengumuman (dummy)
+      // publish pengumuman (demo)
       const btnAnn = document.getElementById("btnAnn");
       if (btnAnn){
         btnAnn.addEventListener("click", () => {
           const title = document.getElementById("annTitle").value.trim();
           const body = document.getElementById("annBody").value.trim();
           const msg = document.getElementById("annMsg");
+
           if (!title || !body){
             msg.textContent = "Judul dan isi pengumuman wajib diisi.";
             return;
           }
-          msg.textContent = "✅ Pengumuman dipublikasikan (tampilan saja).";
+          msg.textContent = "✅ Pengumuman dipublikasikan (demo).";
         });
       }
 
-      // Guru: tambah tugas + upload file (Supabase)
+      // tambah tugas (supabase)
       const btnTask = document.getElementById("btnTask");
       if (btnTask){
         btnTask.addEventListener("click", async () => {
@@ -700,22 +922,20 @@
               judul: title,
               deadline,
               deskripsi: desc,
-              ...fileMeta,
-              created_by: currentUser?.id || null
+              ...fileMeta
             }]);
-
             if (error) throw error;
 
             await loadTugasMateri();
-            msg.textContent = "✅ Tugas berhasil ditambahkan.";
+            msg.textContent = "✅ Tugas berhasil ditambahkan. Cek menu Siswa > Tugas.";
             if (fileInput) fileInput.value = "";
           }catch(err){
-            msg.textContent = "❌ " + err.message;
+            msg.textContent = "❌ " + (err?.message || String(err));
           }
         });
       }
 
-      // Guru: tambah materi + upload file (Supabase)
+      // tambah materi (supabase)
       const btnMat = document.getElementById("btnMat");
       if (btnMat){
         const mapelSelect = document.getElementById("matMapel");
@@ -757,8 +977,7 @@
               link,
               mapel,
               ...(mapel === "Diniyah" ? { sub: sub || "Lainnya" } : {}),
-              ...fileMeta,
-              created_by: currentUser?.id || null
+              ...fileMeta
             };
 
             const { error } = await supabaseClient.from("materi").insert([payload]);
@@ -768,192 +987,107 @@
             msg.textContent = `✅ Materi ditambahkan (${mapel}${mapel==="Diniyah" ? " • " + (payload.sub) : ""}).`;
             if (fileInput) fileInput.value = "";
           }catch(err){
-            msg.textContent = "❌ " + err.message;
+            msg.textContent = "❌ " + (err?.message || String(err));
           }
         });
       }
     }
 
-    /********************************************************************
-     * 7) SUPABASE HELPERS: upload & download
-     ********************************************************************/
-    async function uploadToSupabase(bucket, folder, file){
-      const ext = file.name.split(".").pop();
-      const safeExt = (ext || "bin").replace(/[^\w]+/g, "");
-      const path = `${folder}/${Date.now()}-${Math.random().toString(16).slice(2)}.${safeExt}`;
-
-      const { error } = await supabaseClient.storage.from(bucket).upload(path, file, { upsert: false });
-      if (error) throw error;
-
-      return { file_path: path, file_name: file.name, file_size: file.size };
-    }
-
-    // expose ke window agar bisa dipakai onclick
-    window.openDownload = async function(bucket, file_path){
-      try{
-        const { data, error } = await supabaseClient.storage.from(bucket).createSignedUrl(file_path, 60 * 10);
-        if (error) throw error;
-        window.open(data.signedUrl, "_blank");
-      }catch(e){
-        alert("Gagal download: " + e.message);
-      }
-    };
-
-    async function fetchMyRole(){
-      const { data: { user } } = await supabaseClient.auth.getUser();
-      if (!user) return null;
-
-      const { data, error } = await supabaseClient
-        .from("profiles")
-        .select("role, full_name")
-        .eq("id", user.id)
-        .single();
-
-      if (error) throw error;
-      return data?.role || null;
-    }
-
-    async function loadTugasMateri(){
-      const { data: tugas, error: e1 } = await supabaseClient
-        .from("tugas").select("*").order("created_at", { ascending: false });
-      if (e1) throw e1;
-
-      const { data: materi, error: e2 } = await supabaseClient
-        .from("materi").select("*").order("created_at", { ascending: false });
-      if (e2) throw e2;
-
-      sample.tugas = tugas || [];
-      sample.materi = materi || [];
-    }
-
-    /********************************************************************
-     * 8) AUTH FLOW
-     ********************************************************************/
-    async function refreshUIAfterLogin(){
-      const { data: { user } } = await supabaseClient.auth.getUser();
-      currentUser = user || null;
-
-      currentRole = await fetchMyRole(); // 'guru' / 'siswa'
-      const roleLabel = (currentRole === "guru") ? "Guru" : "Siswa";
-
-      rolePill.textContent = "Role: " + roleLabel;
-      menuHint.textContent = roleLabel;
-      userPill.textContent = "User: " + (currentUser?.email || "-");
-
-      state.role = (currentRole === "guru") ? "guru" : "siswa";
-      state.page = (state.role === "guru") ? "berikan-dashboard" : "dashboard";
-
-      await loadTugasMateri();
-      renderMenu();
-      renderPage();
-
-      appContent.style.display = "block";
-      authBox.style.display = "none";
-      btnLogoutTop.style.display = "inline-block";
-
-      authStatus.textContent = "✅ Login berhasil.";
-    }
-
-    async function updateAuthButtons(){
-      const { data: { user } } = await supabaseClient.auth.getUser();
-      const isLoggedIn = !!user;
-      btnLogin.style.display = isLoggedIn ? "none" : "inline-block";
-      btnLogout.style.display = isLoggedIn ? "inline-block" : "none";
-    }
-
+    /***********************
+     * 9) INIT AUTH + DRAWER
+     ***********************/
     async function initAuth(){
-      btnLogin.addEventListener("click", async () => {
-        const email = document.getElementById("loginEmail").value.trim();
-        const password = document.getElementById("loginPass").value.trim();
-        authStatus.textContent = "Memproses login...";
-
-        const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-        if (error) authStatus.textContent = "❌ " + error.message;
+      // drawer events
+      btnMenu?.addEventListener("click", openMenu);
+      overlay?.addEventListener("click", closeMenu);
+      menuEl.addEventListener("click", () => {
+        if (window.matchMedia("(max-width: 900px)").matches) closeMenu();
       });
 
-      async function doLogout(){
-        await supabaseClient.auth.signOut();
-      }
-      btnLogout.addEventListener("click", doLogout);
-      btnLogoutTop.addEventListener("click", doLogout);
+      // logout top
+      btnLogoutTop.addEventListener("click", async () => { await supabaseClient.auth.signOut(); });
+      btnLogout.addEventListener("click", async () => { await supabaseClient.auth.signOut(); });
 
+      // login (pakai timeout biar tidak stuck tanpa pesan)
+      btnLogin.addEventListener("click", async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("loginEmail").value.trim();
+        const password = document.getElementById("loginPass").value.trim();
+
+        if (!email || !password){
+          authStatus.textContent = "Email dan password wajib diisi.";
+          return;
+        }
+
+        authStatus.textContent = "Memproses login...";
+
+        try{
+          const loginPromise = supabaseClient.auth.signInWithPassword({ email, password });
+          const timeoutPromise = new Promise((_, rej) =>
+            setTimeout(() => rej(new Error("Timeout: tidak bisa menghubungi Supabase. Cek SUPABASE_URL/ANON_KEY, koneksi, atau blocker.")), 15000)
+          );
+
+          const { data, error } = await Promise.race([loginPromise, timeoutPromise]);
+          if (error) throw error;
+
+          console.log("login ok:", data);
+        }catch(err){
+          console.error(err);
+          authStatus.textContent = "❌ " + (err?.message || String(err));
+        }
+      });
+
+      // auth state listener
       supabaseClient.auth.onAuthStateChange(async () => {
-        await updateAuthButtons();
-        const { data: { user } } = await supabaseClient.auth.getUser();
+        await updateButtons();
 
+        const { data: { user } } = await supabaseClient.auth.getUser();
         if (user){
           try{
             await refreshUIAfterLogin();
           }catch(e){
-            authBox.style.display = "block";
-            appContent.style.display = "none";
-            btnLogoutTop.style.display = "none";
-            authStatus.textContent = "❌ " + e.message;
+            console.error(e);
+            authStatus.textContent = "❌ " + (e?.message || String(e));
           }
         } else {
-          // logged out
-          currentUser = null;
+          // reset UI
           currentRole = null;
-
           sample.tugas = [];
           sample.materi = [];
-
-          rolePill.textContent = "Role: -";
-          menuHint.textContent = "-";
-          userPill.textContent = "User: -";
-
           state.role = "siswa";
           state.page = "dashboard";
 
-          renderMenu();
-          pageEl.innerHTML = `<h1>Silakan login</h1><p class="muted">Masuk untuk melihat menu siswa/guru.</p>`;
+          rolePill.textContent = "Role: -";
+          userPill.textContent = "User: -";
+          menuHint.textContent = "-";
+          menuGroupTitle.textContent = "Siswa";
 
-          appContent.style.display = "none";
-          authBox.style.display = "block";
-          btnLogoutTop.style.display = "none";
+          renderMenu();
+          renderPage();
+
+          document.getElementById("appContent").style.display = "none";
           authStatus.textContent = "Silakan login untuk mengakses LMS.";
         }
       });
 
-      await updateAuthButtons();
+      // first render (logged out state)
+      renderMenu();
+      renderPage();
+      await updateButtons();
 
-      // Auto-refresh kalau sudah login sebelumnya
+      // if already logged in
       const { data: { user } } = await supabaseClient.auth.getUser();
-      if (user) {
-        try { await refreshUIAfterLogin(); }
-        catch(e){ authStatus.textContent = "❌ " + e.message; }
-      } else {
-        // initial logged out view
-        renderMenu();
-        pageEl.innerHTML = `<h1>Silakan login</h1><p class="muted">Masuk untuk melihat menu siswa/guru.</p>`;
-      }
+      if (user) await refreshUIAfterLogin();
     }
 
-    /********************************************************************
-     * 9) HELPERS
-     ********************************************************************/
-    function formatBytes(bytes){
-      if (!Number.isFinite(bytes) || bytes <= 0) return "-";
-      const units = ["B","KB","MB","GB"];
-      let i = 0, n = bytes;
-      while (n >= 1024 && i < units.length - 1){
-        n = n / 1024;
-        i++;
-      }
-      return n.toFixed(i === 0 ? 0 : 1) + " " + units[i];
-    }
+    // expose download function for inline onclick
+    window.openDownload = openDownload;
 
-    function escapeHtml(str){
-      return String(str ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-
-    // init
-    initAuth();
+    // start
+    document.addEventListener("DOMContentLoaded", () => {
+      initAuth();
+    });
   </script>
 </body>
 </html>
